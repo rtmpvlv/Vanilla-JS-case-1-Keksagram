@@ -59,8 +59,6 @@ const Commentators = [
   'Олег Киньков',
 ];
 
-const photoDescription = [];
-
 const getComments = () => {
   let comments = {
     id: getRandomInteger(IDs.MIN, IDs.MAX),
@@ -70,6 +68,8 @@ const getComments = () => {
   }
   return comments;
 };
+
+const photoDescription = [];
 
 const getPhotoDescription = () => {
   for (let i = 1; i <= PHOTO_DESCRIPTION_COUNT; i++) {
