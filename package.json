@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "Личный проект «Кекстаграм» от HTML Academy",
-  "author": "Evgenii Shchepotev HTML Academy",
   "repository": {
     "type": "git",
     "url": "git@github.com:htmlacademy/intensive-javascript-kekstagram.git"
@@ -12,7 +11,7 @@
     "url": "https://github.com/htmlacademy/intensive-javascript-kekstagram/issues"
   },
   "devDependencies": {
-    "browser-sync": "2.26.14",
+    "browser-sync": "^2.26.14",
     "eslint-config-htmlacademy": "2.0.0"
   },
   "license": "MIT",

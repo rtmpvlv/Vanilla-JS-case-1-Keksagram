@@ -1,6 +1,5 @@
 import {
-  getRandomInteger,
-  checkMaxLength
-} from './utils.js'
+  photoDescription
+} from './photo-description.js'
 
-console.log('script connected');
+console.log(photoDescription);
