@@ -59,21 +59,29 @@ const Commentators = [
   'Олег Киньков',
 ];
 
-const getComments = () => {
-  let comments = {
+const getRandomComment = () => {
+  const comment = {
     id: getRandomInteger(IDs.MIN, IDs.MAX),
     avatar: 'img/avatar-' + getRandomInteger(AVATARS.MIN, AVATARS.MAX) + '.svg',
     message: getRandomArrayElement(Messages),
     name: getRandomArrayElement(Commentators),
   }
+  return comment;
+};
+
+const getComments = () => {
+  let comments = [];
+  for (let i = 1; i <= getRandomInteger(1, 10); i ++) {
+    comments.push(getRandomComment());
+  }
   return comments;
 };
 
-const photoDescription = [];
+const photoDescriptions = [];
 
 const getPhotoDescription = () => {
   for (let i = 1; i <= PHOTO_DESCRIPTION_COUNT; i++) {
-    photoDescription.push({
+    photoDescriptions.push({
       id: i,
       avatar: 'photos/' + i + '.jpg',
       description: getRandomArrayElement(Description),
@@ -83,8 +91,7 @@ const getPhotoDescription = () => {
   }
 };
 
-getPhotoDescription();
-
 export {
-  photoDescription
+  photoDescriptions,
+  getPhotoDescription
 }

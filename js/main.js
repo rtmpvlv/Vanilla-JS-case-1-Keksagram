@@ -1,5 +1,9 @@
-import {
-  photoDescription
-} from './photo-description.js'
+// import { photoDescriptions } from './photo-description.js'
+import { getPhotoDescription } from './photo-description.js'
+import { createPicture } from './draw-thumbnails.js'
 
-console.log(photoDescription);
+// console.log(photoDescriptions);
+// console.log(getComments());
+
+getPhotoDescription();
+createPicture();
