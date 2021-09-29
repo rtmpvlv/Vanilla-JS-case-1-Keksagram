@@ -11,12 +11,13 @@
     "url": "https://github.com/htmlacademy-javascript/222997-kekstagram-22/issues"
   },
   "devDependencies": {
-    "browser-sync": "2.26.14",
-    "eslint": "7.18.0",
     "eslint-config-htmlacademy": "2.0.0"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "browser-sync": "^2.27.5",
+    "eslint": "^7.32.0"
+  },
   "scripts": {
     "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
     "test": "eslint js/"
