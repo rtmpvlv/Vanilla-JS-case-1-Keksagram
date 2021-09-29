@@ -1,4 +1,5 @@
 // import { photoDescriptions } from './photo-description.js'
+import { openOverlay } from './to-full.js';
 import { getPhotoDescription } from './photo-description.js'
 import { createPicture } from './thumbnails.js'
 
@@ -7,3 +8,4 @@ import { createPicture } from './thumbnails.js'
 
 getPhotoDescription();
 createPicture();
+openOverlay();
