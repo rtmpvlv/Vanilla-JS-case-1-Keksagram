@@ -1,10 +1,10 @@
-const renderUserPhotos = (thumbnails) => {
+const renderUserPhotos = (photoDescriptions) => {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
   const picturesFragment = document.createDocumentFragment();
 
-  thumbnails.forEach(({avatar, likes, comments}) => {
+  photoDescriptions.forEach(({avatar, likes, comments}) => {
     const newPicture = pictureTemplate.cloneNode(true);
     newPicture.querySelector('img').src = avatar;
     newPicture.querySelector('.picture__likes').textContent = likes;
