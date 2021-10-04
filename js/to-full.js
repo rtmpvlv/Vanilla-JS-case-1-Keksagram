@@ -1,5 +1,6 @@
+import { isEscEvent } from './utils.js';
 
-const openOverlay = (photoDescriptions) => {
+const togglePhotoOverlay = (photoDescriptions) => {
 
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureImg = bigPicture.querySelector('.big-picture__img');
@@ -7,15 +8,25 @@ const openOverlay = (photoDescriptions) => {
   const commentsList = document.querySelector('.social__comments');
   const commentsLoaderButton = bigPicture.querySelector('.social__comments-loader');
   const closeButton = bigPicture.querySelector('.big-picture__cancel');
-
   const picture = document.querySelectorAll('.picture');
   const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
-  closeButton.addEventListener('click', () => {
+  const closeOverlay = () => {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
     commentsList.innerHTML = '';
+    document.removeEventListener('keydown', escPressed);
+  };
+
+  closeButton.addEventListener('click', () => {
+    closeOverlay();
   });
+
+  const escPressed = (evt) => {
+    if (isEscEvent(evt)) {
+      closeOverlay();
+    }
+  };
 
   for (let i = 0; i < picture.length; i++) {
     picture[i].addEventListener('click', (evt) => {
@@ -32,6 +43,7 @@ const openOverlay = (photoDescriptions) => {
       commentsCounter.classList.add('hidden');
       commentsLoaderButton.classList.add('hidden');
       document.body.classList.add('modal-open');
+      document.addEventListener('keydown', escPressed);
     })
   }
 
@@ -52,4 +64,4 @@ const openOverlay = (photoDescriptions) => {
   }
 };
 
-export { openOverlay };
+export { togglePhotoOverlay };

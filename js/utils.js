@@ -11,8 +11,13 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const checkMaxLength = (str, maxLength) => str <= maxLength;
 
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
 export {
   getRandomInteger,
   getRandomArrayElement,
-  checkMaxLength
+  checkMaxLength,
+  isEscEvent
 };
