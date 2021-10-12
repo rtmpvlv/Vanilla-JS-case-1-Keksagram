@@ -1,5 +1,6 @@
 import { isEscEvent } from './utils.js';
 import { getSlider } from './slider.js';
+import { setValidation } from './validation.js';
 
 getSlider();
 
@@ -7,6 +8,8 @@ const uploadFile = () => {
   const uploadInput = document.querySelector('#upload-file');
   const uploadOverlayForm = document.querySelector('.img-upload__overlay');
   const uploadCancelButton = document.querySelector('#upload-cancel');
+  const descriptionText = document.querySelector('.text__description');
+  const hashtagInput = document.querySelector('.text__hashtags');
 
   const escPressed = (evt) => {
     if (isEscEvent(evt)) {
@@ -15,11 +18,24 @@ const uploadFile = () => {
     }
   };
 
+  const cancelEscPressed = (element) => {
+    element.onfocus = () => {
+      document.removeEventListener('keydown', escPressed);
+    }
+    element.onblur = () => {
+      document.addEventListener('keydown', escPressed);
+    }
+  };
+
+  cancelEscPressed(hashtagInput);
+  cancelEscPressed(descriptionText);
+
   const openUploadOverlay = () => {
+    rescale();
+    setValidation();
     uploadOverlayForm.classList.remove('hidden');
     document.body.classList.add('modal-open');
     document.addEventListener('keydown', escPressed);
-    rescale();
   };
 
   const closeUploadOverlay = () => {
@@ -70,4 +86,6 @@ const rescale = () => {
   });
 };
 
-export { uploadFile };
+export {
+  uploadFile
+};
