@@ -1,6 +1,6 @@
 import { isEscEvent } from './utils.js';
 
-const togglePhotoOverlay = (photoDescriptions) => {
+const togglePhotoOverlay = (photos) => {
 
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureImg = bigPicture.querySelector('.big-picture__img');
@@ -32,12 +32,12 @@ const togglePhotoOverlay = (photoDescriptions) => {
     picture[i].addEventListener('click', (evt) => {
       evt.preventDefault();
 
-      bigPictureImg.querySelector('img').src = photoDescriptions[i].avatar;
-      bigPicture.querySelector('.likes-count').textContent = photoDescriptions[i].likes;
-      bigPicture.querySelector('.comments-count').textContent = photoDescriptions[i].comments.length;
-      bigPicture.querySelector('.social__caption').textContent = photoDescriptions[i].description;
+      bigPictureImg.querySelector('img').src = photos[i].url;
+      bigPicture.querySelector('.likes-count').textContent = photos[i].likes;
+      bigPicture.querySelector('.comments-count').textContent = photos[i].comments.length;
+      bigPicture.querySelector('.social__caption').textContent = photos[i].description;
 
-      renderComments(photoDescriptions[i].comments);
+      renderComments(photos[i].comments);
 
       bigPicture.classList.remove('hidden');
       commentsCounter.classList.add('hidden');

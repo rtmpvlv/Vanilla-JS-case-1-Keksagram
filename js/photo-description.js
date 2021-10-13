@@ -91,7 +91,8 @@ const getPhotoDescription = () => {
   }
 };
 
-export {
-  photoDescriptions,
-  getPhotoDescription
-}
+getPhotoDescription();
+
+// export {
+// photoDescriptions,
+// }

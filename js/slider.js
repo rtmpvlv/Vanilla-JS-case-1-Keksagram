@@ -1,6 +1,6 @@
 /* global noUiSlider:readonly */
 
-const getSlider = () => {
+const initializeSlider = () => {
   const effectLevel = document.querySelector('.effect-level__value');
   const sliderElement = document.querySelector('.effect-level__slider');
   const effectItems = document.querySelectorAll('.effects__radio');
@@ -50,7 +50,6 @@ const getSlider = () => {
           effectLevelFieldset.classList.add('hidden');
           imageUploadPreview.querySelector('img').style.filter = 'none';
           actualTypeOfEffect = 'none';
-          // actualTargetValue = evt.target.value;
           applyEffects(evt.target.value);
           break;
         case 'chrome':
@@ -63,7 +62,6 @@ const getSlider = () => {
             step: 0.1,
           });
           actualTypeOfEffect = 'grayscale';
-          // actualTargetValue = evt.target.value;
           imageUploadPreview.querySelector('img').style.filter = '';
           applyEffects(evt.target.value);
           effectLevelFieldset.classList.remove('hidden');
@@ -78,7 +76,6 @@ const getSlider = () => {
             step: 0.1,
           });
           actualTypeOfEffect = 'sepia';
-          // actualTargetValue = evt.target.value;
           imageUploadPreview.querySelector('img').style.filter = '';
           applyEffects(evt.target.value);
           effectLevelFieldset.classList.remove('hidden');
@@ -93,7 +90,6 @@ const getSlider = () => {
             step: 1,
           });
           actualTypeOfEffect = 'invert';
-          // actualTargetValue = evt.target.value;
           imageUploadPreview.querySelector('img').style.filter = '';
           applyEffects(evt.target.value);
           effectLevelFieldset.classList.remove('hidden');
@@ -108,7 +104,6 @@ const getSlider = () => {
             step: 0.1,
           });
           actualTypeOfEffect = 'blur';
-          // actualTargetValue = evt.target.value;
           imageUploadPreview.querySelector('img').style.filter = '';
           applyEffects(evt.target.value);
           effectLevelFieldset.classList.remove('hidden');
@@ -123,7 +118,6 @@ const getSlider = () => {
             step: 0.1,
           });
           actualTypeOfEffect = 'brightness';
-          // actualTargetValue = evt.target.value;
           imageUploadPreview.querySelector('img').style.filter = '';
           applyEffects(evt.target.value);
           effectLevelFieldset.classList.remove('hidden');
@@ -139,4 +133,4 @@ const getSlider = () => {
 
 };
 
-export { getSlider };
+export { initializeSlider };

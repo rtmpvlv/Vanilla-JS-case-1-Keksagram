@@ -40,9 +40,9 @@ const setValidation = () => {
       const inputValues = field.value.toLowerCase().trim().split(/\s+/);
 
       if (inputValues.some((item) => item[0] != '#')) {
-        field.setCustomValidity('Напишите хэштэг используя #.'); //1
+        field.setCustomValidity('Напишите хэштэг используя #.');
         answerBadValue(field);
-      } else if (inputValues.some((item) => item.match(/[^A-Za-z0-9#]/))) {
+      } else if (inputValues.some((item) => item.match(/[^A-Za-zА-Яа-я0-9#]/))) {
         field.setCustomValidity('Не используйте спецсимволы.');
         answerBadValue(field);
       } else if (inputValues.some((item) => item == '#')) {
