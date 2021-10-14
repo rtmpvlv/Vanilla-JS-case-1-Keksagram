@@ -15,7 +15,6 @@ const uploadFile = () => {
   const escPressed = (evt) => {
     if (isEscEvent(evt)) {
       closeUploadOverlay();
-      resetOptions();
     }
   };
 
@@ -40,10 +39,10 @@ const uploadFile = () => {
   };
 
   const closeUploadOverlay = () => {
-    uploadInput.value = null;
     uploadOverlayForm.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', escPressed);
+    resetOptions();
   };
 
   uploadInput.addEventListener('change', () => {
@@ -52,7 +51,6 @@ const uploadFile = () => {
 
   uploadCancelButton.addEventListener('click', () => {
     closeUploadOverlay();
-    resetOptions();
   });
 
   const resetOptions = () => {
@@ -69,10 +67,17 @@ const uploadFile = () => {
   const manageSuccessWindow = () => {
     const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
     const successMessage = successMessageTemplate.cloneNode(true);
-    // const successButton = successMessage.querySelector('.success__button');
 
     const removeSuccessWindow = () => {
       document.body.removeChild(successMessage);
+      document.removeEventListener('click', onClickHandler);
+      document.removeEventListener('keydown', escPressedWithSuccessWindow);
+    };
+
+    const onClickHandler = (evt) => {
+      if (evt.target != successMessage.querySelector('.success__inner')) {
+        removeSuccessWindow();
+      }
     };
 
     const escPressedWithSuccessWindow = (evt) => {
@@ -82,7 +87,7 @@ const uploadFile = () => {
     };
 
     document.addEventListener('keydown', escPressedWithSuccessWindow);
-    document.addEventListener('click', removeSuccessWindow);
+    document.addEventListener('click', onClickHandler);
 
     document.body.appendChild(successMessage);
   };
@@ -90,20 +95,27 @@ const uploadFile = () => {
   const manageErrorWindow = () => {
     const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
     const errorMessage = errorMessageTemplate.cloneNode(true);
-    // const errorButton = errorMessage.querySelector('.error__button');
 
     const removeErrorWindow = () => {
       document.body.removeChild(errorMessage);
+      document.removeEventListener('click', onClickHandler);
+      document.removeEventListener('keydown', escPressedWithErrorWindow);
     };
 
-    const escPressedWithSuccessWindow = (evt) => {
+    const onClickHandler = (evt) => {
+      if (evt.target != errorMessage.querySelector('.error__inner')) {
+        removeErrorWindow();
+      }
+    };
+
+    const escPressedWithErrorWindow = (evt) => {
       if (isEscEvent(evt)) {
         removeErrorWindow();
       }
     };
 
-    document.addEventListener('keydown', escPressedWithSuccessWindow);
-    document.addEventListener('click', removeErrorWindow);
+    document.addEventListener('keydown', escPressedWithErrorWindow);
+    document.addEventListener('click', onClickHandler);
 
     document.body.appendChild(errorMessage);
   };
