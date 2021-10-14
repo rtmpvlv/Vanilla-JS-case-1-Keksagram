@@ -120,18 +120,6 @@ const uploadFile = () => {
     document.body.appendChild(errorMessage);
   };
 
-  const isSuccessfulUpload = () => {
-    closeUploadOverlay();
-    resetOptions();
-    manageSuccessWindow();
-  };
-
-  const isUnseccessfulUpload = () => {
-    closeUploadOverlay();
-    resetOptions();
-    manageErrorWindow();
-  }
-
   const setUserFormSubmit = () => {
     const uploadForm = document.querySelector('#upload-select-image');
 
@@ -139,8 +127,16 @@ const uploadFile = () => {
       evt.preventDefault();
 
       sendData(
-        () => isSuccessfulUpload(),
-        () => isUnseccessfulUpload(),
+        () => {
+          closeUploadOverlay();
+          resetOptions();
+          manageSuccessWindow();
+        },
+        () => {
+          closeUploadOverlay();
+          resetOptions();
+          manageErrorWindow();
+        },
         new FormData(evt.target),
       );
     });
