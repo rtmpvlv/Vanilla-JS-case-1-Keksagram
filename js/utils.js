@@ -9,6 +9,16 @@ const getRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const getNewRandomArray = (array, length) => {
+  const newArray = array.slice();
+  for (let i = newArray.length - 1; i > 0; i--) {
+    let j = getRandomInteger(0, i);
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  newArray.length = length;
+  return newArray;
+};
+
 const checkMaxLength = (str, maxLength) => str <= maxLength;
 
 const isEscEvent = (evt) => {
@@ -41,6 +51,7 @@ const showAlert = (message) => {
 export {
   getRandomInteger,
   getRandomArrayElement,
+  getNewRandomArray,
   checkMaxLength,
   isEscEvent,
   showAlert

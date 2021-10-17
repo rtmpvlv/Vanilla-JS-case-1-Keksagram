@@ -1,8 +1,25 @@
-const renderUserPhotos = (photos) => {
-  const picturesContainer = document.querySelector('.pictures');
-  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+/* global _:readonly */
 
-  const picturesFragment = document.createDocumentFragment();
+import { getData } from './fetch.js';
+import { togglePhotoOverlay } from './to-full.js';
+import { getNewRandomArray } from './utils.js';
+
+const FILTER_TOP_TEN_LENGTH = 10;
+
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesFragment = document.createDocumentFragment();
+const defaultFilterButton = document.querySelector('#filter-default');
+const randomFilterButton = document.querySelector('#filter-random');
+const discussedFilterButton = document.querySelector('#filter-discussed');
+
+const showFiltering = () => {
+  const imgFilterSection = document.querySelector('.img-filters');
+
+  imgFilterSection.classList.remove('img-filters--inactive');
+}
+
+const renderUserPhotos = (photos) => {
 
   photos.forEach(({url, likes, comments}) => {
     const newPicture = pictureTemplate.cloneNode(true);
@@ -15,6 +32,70 @@ const renderUserPhotos = (photos) => {
   picturesContainer.appendChild(picturesFragment);
 };
 
+getData((photos) => {
+  renderUserPhotos(photos);
+  togglePhotoOverlay(photos);
+  showFiltering();
+
+  const onDeaultButtonClick = () => {
+    picturesContainer.querySelectorAll('a').forEach(item => {
+      picturesContainer.removeChild(item);
+    });
+    renderUserPhotos(photos);
+    togglePhotoOverlay(photos);
+    defaultFilterButton.classList.add('img-filters__button--active');
+    randomFilterButton.classList.remove('img-filters__button--active');
+    discussedFilterButton.classList.remove('img-filters__button--active');
+  };
+
+  defaultFilterButton.addEventListener('click', _.debounce(onDeaultButtonClick, 500));
+
+  const onRandomButtonClick = () => {
+    picturesContainer.querySelectorAll('a').forEach(item => {
+      picturesContainer.removeChild(item);
+    });
+
+    const randomArray = getNewRandomArray(photos, FILTER_TOP_TEN_LENGTH);
+
+    renderUserPhotos(randomArray);
+    togglePhotoOverlay(randomArray);
+    defaultFilterButton.classList.remove('img-filters__button--active');
+    randomFilterButton.classList.add('img-filters__button--active');
+    discussedFilterButton.classList.remove('img-filters__button--active');
+  };
+
+  randomFilterButton.addEventListener('click', _.debounce(onRandomButtonClick, 500));
+
+  const onDiscussedButtonClick = () => {
+    const getPhotosCommentsQuantity = (photo) => {
+      return photo.comments.length;
+    };
+
+    const compareCommentsQuantity = (photo_i, photo_j) => {
+      let commentsQuantity_i = getPhotosCommentsQuantity(photo_i);
+      let commentsQuantity_j = getPhotosCommentsQuantity(photo_j);
+
+      return commentsQuantity_j - commentsQuantity_i;
+    };
+
+    let discussedPhotos = photos.slice().sort(compareCommentsQuantity);
+
+    picturesContainer.querySelectorAll('a').forEach(item => {
+      picturesContainer.removeChild(item);
+    });
+
+    renderUserPhotos(discussedPhotos);
+    togglePhotoOverlay(discussedPhotos);
+
+    defaultFilterButton.classList.remove('img-filters__button--active');
+    randomFilterButton.classList.remove('img-filters__button--active');
+    discussedFilterButton.classList.add('img-filters__button--active');
+  };
+
+  discussedFilterButton.addEventListener('click', _.debounce(onDiscussedButtonClick, 500));
+});
+
 export {
-  renderUserPhotos
+  renderUserPhotos,
+  showFiltering
 }
