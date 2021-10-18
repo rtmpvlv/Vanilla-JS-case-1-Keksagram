@@ -4,7 +4,7 @@ import { getData } from './fetch.js';
 import { togglePhotoOverlay } from './to-full.js';
 import { getNewRandomArray } from './utils.js';
 
-const FILTER_TOP_TEN_LENGTH = 10;
+const RANDOM_FILTER_PHOTOS_QUANTITY = 10;
 
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -37,34 +37,38 @@ getData((photos) => {
   togglePhotoOverlay(photos);
   showFiltering();
 
-  const onDeaultButtonClick = () => {
+  const onDefaultButtonClick = () => {
     picturesContainer.querySelectorAll('a').forEach(item => {
       picturesContainer.removeChild(item);
     });
     renderUserPhotos(photos);
     togglePhotoOverlay(photos);
+  };
+
+  defaultFilterButton.addEventListener('click', _.debounce(onDefaultButtonClick, 500));
+  defaultFilterButton.addEventListener('click', () => {
     defaultFilterButton.classList.add('img-filters__button--active');
     randomFilterButton.classList.remove('img-filters__button--active');
     discussedFilterButton.classList.remove('img-filters__button--active');
-  };
-
-  defaultFilterButton.addEventListener('click', _.debounce(onDeaultButtonClick, 500));
+  });
 
   const onRandomButtonClick = () => {
     picturesContainer.querySelectorAll('a').forEach(item => {
       picturesContainer.removeChild(item);
     });
 
-    const randomArray = getNewRandomArray(photos, FILTER_TOP_TEN_LENGTH);
+    const randomArray = getNewRandomArray(photos, RANDOM_FILTER_PHOTOS_QUANTITY);
 
     renderUserPhotos(randomArray);
     togglePhotoOverlay(randomArray);
-    defaultFilterButton.classList.remove('img-filters__button--active');
-    randomFilterButton.classList.add('img-filters__button--active');
-    discussedFilterButton.classList.remove('img-filters__button--active');
   };
 
   randomFilterButton.addEventListener('click', _.debounce(onRandomButtonClick, 500));
+  randomFilterButton.addEventListener('click', () => {
+    defaultFilterButton.classList.remove('img-filters__button--active');
+    randomFilterButton.classList.add('img-filters__button--active');
+    discussedFilterButton.classList.remove('img-filters__button--active');
+  });
 
   const onDiscussedButtonClick = () => {
     const getPhotosCommentsQuantity = (photo) => {
@@ -86,13 +90,14 @@ getData((photos) => {
 
     renderUserPhotos(discussedPhotos);
     togglePhotoOverlay(discussedPhotos);
-
-    defaultFilterButton.classList.remove('img-filters__button--active');
-    randomFilterButton.classList.remove('img-filters__button--active');
-    discussedFilterButton.classList.add('img-filters__button--active');
   };
 
   discussedFilterButton.addEventListener('click', _.debounce(onDiscussedButtonClick, 500));
+  discussedFilterButton.addEventListener('click', () => {
+    defaultFilterButton.classList.remove('img-filters__button--active');
+    randomFilterButton.classList.remove('img-filters__button--active');
+    discussedFilterButton.classList.add('img-filters__button--active');
+  });
 });
 
 export {
