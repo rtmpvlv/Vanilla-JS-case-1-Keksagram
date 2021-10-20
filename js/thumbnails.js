@@ -1,7 +1,7 @@
 /* global _:readonly */
 
 import { getData } from './fetch.js';
-import { togglePhotoOverlay } from './to-full.js';
+import { renderPictureClickHandler } from './to-full.js';
 import { getNewRandomArray } from './utils.js';
 
 const RANDOM_FILTER_PHOTOS_QUANTITY = 10;
@@ -21,20 +21,19 @@ const showFiltering = () => {
 
 const renderUserPhotos = (photos) => {
 
-  photos.forEach(({url, likes, comments}) => {
+  photos.forEach((photo) => {
     const newPicture = pictureTemplate.cloneNode(true);
-    newPicture.querySelector('img').src = url;
-    newPicture.querySelector('.picture__likes').textContent = likes;
-    newPicture.querySelector('.picture__comments').textContent = comments.length;
+    newPicture.querySelector('img').src = photo.url;
+    newPicture.querySelector('.picture__likes').textContent = photo.likes;
+    newPicture.querySelector('.picture__comments').textContent = photo.comments.length;
+    renderPictureClickHandler(photo, newPicture);
     picturesFragment.appendChild(newPicture);
   });
-
   picturesContainer.appendChild(picturesFragment);
 };
 
 getData((photos) => {
   renderUserPhotos(photos);
-  togglePhotoOverlay(photos);
   showFiltering();
 
   const onDefaultButtonClick = () => {
@@ -42,7 +41,6 @@ getData((photos) => {
       picturesContainer.removeChild(item);
     });
     renderUserPhotos(photos);
-    togglePhotoOverlay(photos);
   };
 
   defaultFilterButton.addEventListener('click', _.debounce(onDefaultButtonClick, 500));
@@ -60,7 +58,6 @@ getData((photos) => {
     const randomArray = getNewRandomArray(photos, RANDOM_FILTER_PHOTOS_QUANTITY);
 
     renderUserPhotos(randomArray);
-    togglePhotoOverlay(randomArray);
   };
 
   randomFilterButton.addEventListener('click', _.debounce(onRandomButtonClick, 500));
@@ -89,7 +86,6 @@ getData((photos) => {
     });
 
     renderUserPhotos(discussedPhotos);
-    togglePhotoOverlay(discussedPhotos);
   };
 
   discussedFilterButton.addEventListener('click', _.debounce(onDiscussedButtonClick, 500));

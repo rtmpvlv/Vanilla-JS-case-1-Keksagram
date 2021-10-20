@@ -70,24 +70,18 @@ const uploadFile = () => {
 
     const removeSuccessWindow = () => {
       document.body.removeChild(successMessage);
-      document.removeEventListener('click', onClickHandler);
-      document.removeEventListener('keydown', escPressedWithSuccessWindow);
+      document.removeEventListener('click', onClickAndKeydownHandler);
+      document.removeEventListener('keydown', onClickAndKeydownHandler);
     };
 
-    const onClickHandler = (evt) => {
-      if (evt.target != successMessage.querySelector('.success__inner')) {
+    const onClickAndKeydownHandler = (evt) => {
+      if (evt.target != successMessage.querySelector('.success__inner') || isEscEvent(evt)) {
         removeSuccessWindow();
       }
     };
 
-    const escPressedWithSuccessWindow = (evt) => {
-      if (isEscEvent(evt)) {
-        removeSuccessWindow();
-      }
-    };
-
-    document.addEventListener('keydown', escPressedWithSuccessWindow);
-    document.addEventListener('click', onClickHandler);
+    document.addEventListener('keydown', onClickAndKeydownHandler);
+    document.addEventListener('click', onClickAndKeydownHandler);
 
     document.body.appendChild(successMessage);
   };
@@ -98,24 +92,18 @@ const uploadFile = () => {
 
     const removeErrorWindow = () => {
       document.body.removeChild(errorMessage);
-      document.removeEventListener('click', onClickHandler);
-      document.removeEventListener('keydown', escPressedWithErrorWindow);
+      document.removeEventListener('click', onClickAndKeydownHandler);
+      document.removeEventListener('keydown', onClickAndKeydownHandler);
     };
 
-    const onClickHandler = (evt) => {
-      if (evt.target != errorMessage.querySelector('.error__inner')) {
+    const onClickAndKeydownHandler = (evt) => {
+      if (evt.target != errorMessage.querySelector('.error__inner') || isEscEvent(evt)) {
         removeErrorWindow();
       }
     };
 
-    const escPressedWithErrorWindow = (evt) => {
-      if (isEscEvent(evt)) {
-        removeErrorWindow();
-      }
-    };
-
-    document.addEventListener('keydown', escPressedWithErrorWindow);
-    document.addEventListener('click', onClickHandler);
+    document.addEventListener('keydown', onClickAndKeydownHandler);
+    document.addEventListener('click', onClickAndKeydownHandler);
 
     document.body.appendChild(errorMessage);
   };
