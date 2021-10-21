@@ -8,6 +8,7 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const uploadInput = document.querySelector('#upload-file');
 const preview = document.querySelector('.img-upload__preview img');
 const uploadOverlayForm = document.querySelector('.img-upload__overlay');
+const effectsPreviews = document.querySelectorAll('.effects__preview')
 const uploadCancelButton = document.querySelector('#upload-cancel');
 const descriptionText = document.querySelector('.text__description');
 const hashtagInput = document.querySelector('.text__hashtags');
@@ -68,6 +69,9 @@ const uploadFile = () => {
 
         reader.addEventListener('load', () => {
           preview.src = reader.result;
+          effectsPreviews.forEach(item => {
+            item.style.backgroundImage = `url('${reader.result}')`;
+          })
         });
         reader.readAsDataURL(file);
         openUploadOverlay();
