@@ -3,14 +3,24 @@ import { initializeSlider } from './slider.js';
 import { setValidation } from './validation.js';
 import { sendData } from './fetch.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const uploadInput = document.querySelector('#upload-file');
+const preview = document.querySelector('.img-upload__preview img');
+const uploadOverlayForm = document.querySelector('.img-upload__overlay');
+const uploadCancelButton = document.querySelector('#upload-cancel');
+const descriptionText = document.querySelector('.text__description');
+const hashtagInput = document.querySelector('.text__hashtags');
+
+const scale = document.querySelector('.img-upload__scale');
+const smallerButton = scale.querySelector('.scale__control--smaller');
+const biggerButton = scale.querySelector('.scale__control--bigger');
+const scaleControl = scale.querySelector('.scale__control--value');
+const imageUploadPreview = document.querySelector('.img-upload__preview');
+
 initializeSlider();
 
 const uploadFile = () => {
-  const uploadInput = document.querySelector('#upload-file');
-  const uploadOverlayForm = document.querySelector('.img-upload__overlay');
-  const uploadCancelButton = document.querySelector('#upload-cancel');
-  const descriptionText = document.querySelector('.text__description');
-  const hashtagInput = document.querySelector('.text__hashtags');
 
   const escPressed = (evt) => {
     if (isEscEvent(evt)) {
@@ -45,9 +55,29 @@ const uploadFile = () => {
     resetOptions();
   };
 
-  uploadInput.addEventListener('change', () => {
-    openUploadOverlay();
-  });
+  const uploadNewFile = () => {
+    uploadInput.addEventListener('change', () => {
+      const file = uploadInput.files[0];
+      const fileName = file.name.toLowerCase();
+      const matches = FILE_TYPES.some((it) => {
+        return fileName.endsWith(it);
+      });
+
+      if (matches) {
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+          preview.src = reader.result;
+        });
+        reader.readAsDataURL(file);
+        openUploadOverlay();
+      } else {
+        resetOptions();
+      }
+    });
+  };
+  uploadNewFile();
+
 
   uploadCancelButton.addEventListener('click', () => {
     closeUploadOverlay();
@@ -63,6 +93,7 @@ const uploadFile = () => {
     descriptionText.value = null;
     hashtagInput.value = null;
   };
+
 
   const manageSuccessWindow = () => {
     const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -134,19 +165,12 @@ const uploadFile = () => {
 };
 
 const rescale = () => {
-  const scale = document.querySelector('.img-upload__scale');
-  const smallerButton = scale.querySelector('.scale__control--smaller');
-  const biggerButton = scale.querySelector('.scale__control--bigger');
-  const scaleControl = scale.querySelector('.scale__control--value');
-  const imageUploadPreview = document.querySelector('.img-upload__preview');
-
   scaleControl.value = '100%';
   let scaleControlValue = parseInt(scaleControl.value) / 100;
 
   const transformPhoto = (scaleControlValue) => {
     imageUploadPreview.querySelector('img').style.transform = `scale(${scaleControlValue})`;
   };
-
   transformPhoto(scaleControlValue);
 
   smallerButton.addEventListener('click', () => {
