@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 3000;
+
 const getRandomInteger = (min, max) => {
   if (max <= min) {
     [min, max] = [max, min];
@@ -26,8 +28,6 @@ const isEscEvent = (evt) => {
 };
 
 const showAlert = (message) => {
-  const ALERT_SHOW_TIME = 3000;
-
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';

@@ -1,5 +1,7 @@
 /* global noUiSlider:readonly */
 
+const DEFAULT_EFFECT_LEVEL = 100;
+
 const initializeSlider = () => {
   const effectLevel = document.querySelector('.effect-level__value');
   const sliderElement = document.querySelector('.effect-level__slider');
@@ -10,7 +12,7 @@ const initializeSlider = () => {
   effectLevelFieldset.classList.add('hidden');
   let actualTypeOfEffect = 'none';
   let actualTargetValue = 'none';
-  effectLevel.value = 100;
+  effectLevel.value = DEFAULT_EFFECT_LEVEL;
 
   noUiSlider.create(sliderElement, {
     range: {
@@ -24,7 +26,7 @@ const initializeSlider = () => {
 
   const applyEffects = (value) => {
     imageUploadPreview.querySelector('img').className = '';
-    if (value != 'none') {
+    if (value !== 'none') {
       imageUploadPreview.querySelector('img').classList.add(`effects__preview--${value}`)
     }
   };

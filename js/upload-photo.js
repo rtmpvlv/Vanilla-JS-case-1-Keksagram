@@ -110,7 +110,7 @@ const uploadFile = () => {
     };
 
     const onClickAndKeydownHandler = (evt) => {
-      if (evt.target != successMessage.querySelector('.success__inner') || isEscEvent(evt)) {
+      if (evt.target !== successMessage.querySelector('.success__inner') || isEscEvent(evt)) {
         removeSuccessWindow();
       }
     };
@@ -132,7 +132,7 @@ const uploadFile = () => {
     };
 
     const onClickAndKeydownHandler = (evt) => {
-      if (evt.target != errorMessage.querySelector('.error__inner') || isEscEvent(evt)) {
+      if (evt.target !== errorMessage.querySelector('.error__inner') || isEscEvent(evt)) {
         removeErrorWindow();
       }
     };
